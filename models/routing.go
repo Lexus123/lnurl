@@ -12,6 +12,7 @@ type Route struct {
 	Method      string
 	Pattern     string
 	HandlerFunc http.HandlerFunc
+	Queries     []string
 }
 
 /*

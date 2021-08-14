@@ -12,7 +12,8 @@ var GetRoutes = models.Routes{
 	models.Route{
 		Name:        "GetHomePage",
 		Method:      "GET",
-		Pattern:     "/",
+		Pattern:     "/lnurl-pay",
+		Queries:     []string{"amount", "{amount}"},
 		HandlerFunc: handlers.GetPaymentRequest,
 	},
 }

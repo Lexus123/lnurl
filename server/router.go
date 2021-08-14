@@ -22,6 +22,7 @@ func NewRouter() *mux.Router {
 		router.
 			Methods(route.Method).
 			Path(route.Pattern).
+			Queries(route.Queries...).
 			Name(route.Name).
 			Handler(handler)
 	}
