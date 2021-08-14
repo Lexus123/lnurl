@@ -3,19 +3,30 @@ package server
 import (
 	"net/http"
 
+	"github.com/Lexus123/lnurl/models"
+	"github.com/Lexus123/lnurl/server/handlers"
 	"github.com/gorilla/mux"
-
-	"github.com/Lexus123/lnurl/server/routes"
+	"github.com/lightninglabs/lndclient"
 )
 
 /*
 NewRouter ...
 */
-func NewRouter() *mux.Router {
+func NewRouter(lndServices *lndclient.GrpcLndServices) *mux.Router {
 	router := mux.NewRouter().StrictSlash(true)
 
+	getRoutes := models.Routes{
+		models.Route{
+			Name:        "GetHomePage",
+			Method:      "GET",
+			Pattern:     "/lnurl-pay",
+			Queries:     []string{"amount", "{amount}"},
+			HandlerFunc: handlers.GetPaymentRequest(lndServices),
+		},
+	}
+
 	// Add GET requests
-	for _, route := range routes.GetRoutes {
+	for _, route := range getRoutes {
 		var handler http.Handler
 		handler = route.HandlerFunc
 
