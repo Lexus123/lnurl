@@ -63,7 +63,7 @@ func Payment(ctx context.Context, lndServices *lndclient.GrpcLndServices) http.H
 		s1 := `[[text/plain, donate@theroadtonode.com],[text/identifier, donate@theroadtonode.com]]`                 // NOT WORKING
 		s2 := "[[text/plain, donate@theroadtonode.com],[text/identifier, donate@theroadtonode.com]]"                 // NOT WORKING
 		s3 := `[[\"text/plain\", \"donate@theroadtonode.com\"],[\"text/identifier\", \"donate@theroadtonode.com\"]]` // NOT WORKING
-		s4 := "[[\"text/plain\", \"donate@theroadtonode.com\"],[\"text/identifier\", \"donate@theroadtonode.com\"]]"
+		s4 := "[[\"text/plain\", \"donate@theroadtonode.com\"],[\"text/identifier\", \"donate@theroadtonode.com\"]]" // NOT WORKING
 		s5 := `"[[\"text/plain\", \"donate@theroadtonode.com\"],[\"text/identifier\", \"donate@theroadtonode.com\"]]"`
 		s6 := `"[[text/plain, donate@theroadtonode.com],[text/identifier, donate@theroadtonode.com]]"`
 
@@ -100,7 +100,7 @@ func Payment(ctx context.Context, lndServices *lndclient.GrpcLndServices) http.H
 			Value:           value,
 			Expiry:          60,
 			HodlInvoice:     false,
-			DescriptionHash: h4,
+			DescriptionHash: h5,
 		}
 
 		// Create the invoice
