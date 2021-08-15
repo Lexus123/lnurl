@@ -60,11 +60,11 @@ func Payment(ctx context.Context, lndServices *lndclient.GrpcLndServices) http.H
 		// Getting the amount
 		value := retrieveAmount(r)
 
-		s1 := `[[text/plain, donate@theroadtonode.com],[text/identifier, donate@theroadtonode.com]]`                 // NOT WORKING
-		s2 := "[[text/plain, donate@theroadtonode.com],[text/identifier, donate@theroadtonode.com]]"                 // NOT WORKING
-		s3 := `[[\"text/plain\", \"donate@theroadtonode.com\"],[\"text/identifier\", \"donate@theroadtonode.com\"]]` // NOT WORKING
-		s4 := "[[\"text/plain\", \"donate@theroadtonode.com\"],[\"text/identifier\", \"donate@theroadtonode.com\"]]" // NOT WORKING
-		s5 := `"[[\"text/plain\", \"donate@theroadtonode.com\"],[\"text/identifier\", \"donate@theroadtonode.com\"]]"`
+		s1 := `[[text/plain, donate@theroadtonode.com],[text/identifier, donate@theroadtonode.com]]`                   // NOT WORKING
+		s2 := "[[text/plain, donate@theroadtonode.com],[text/identifier, donate@theroadtonode.com]]"                   // NOT WORKING
+		s3 := `[[\"text/plain\", \"donate@theroadtonode.com\"],[\"text/identifier\", \"donate@theroadtonode.com\"]]`   // NOT WORKING
+		s4 := "[[\"text/plain\", \"donate@theroadtonode.com\"],[\"text/identifier\", \"donate@theroadtonode.com\"]]"   // NOT WORKING
+		s5 := `"[[\"text/plain\", \"donate@theroadtonode.com\"],[\"text/identifier\", \"donate@theroadtonode.com\"]]"` // NOT WORKING
 		s6 := `"[[text/plain, donate@theroadtonode.com],[text/identifier, donate@theroadtonode.com]]"`
 
 		fmt.Printf("s1: %v\n", s1)
@@ -100,7 +100,7 @@ func Payment(ctx context.Context, lndServices *lndclient.GrpcLndServices) http.H
 			Value:           value,
 			Expiry:          60,
 			HodlInvoice:     false,
-			DescriptionHash: h5,
+			DescriptionHash: h6,
 		}
 
 		// Create the invoice
