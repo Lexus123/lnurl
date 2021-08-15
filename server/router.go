@@ -24,7 +24,7 @@ func NewRouter(lndServices *lndclient.GrpcLndServices) *mux.Router {
 			Method:      "GET",
 			Pattern:     "/lnurl-pay",
 			Queries:     []string{"amount", "{amount}"},
-			HandlerFunc: handlers.GetPaymentRequest(ctx, lndServices),
+			HandlerFunc: handlers.Payment(ctx, lndServices),
 		},
 	}
 

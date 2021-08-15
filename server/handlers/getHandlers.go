@@ -2,10 +2,12 @@ package handlers
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"strconv"
 
+	"github.com/Lexus123/lnurl/models"
 	"github.com/btcsuite/btcutil"
 	"github.com/lightninglabs/lndclient"
 	"github.com/lightningnetwork/lnd/lnrpc/invoicesrpc"
@@ -44,9 +46,9 @@ func retrieveAmount(r *http.Request) lnwire.MilliSatoshi {
 }
 
 /*
-GetPaymentRequest ...
+Payment ...
 */
-func GetPaymentRequest(ctx context.Context, lndServices *lndclient.GrpcLndServices) http.HandlerFunc {
+func Payment(ctx context.Context, lndServices *lndclient.GrpcLndServices) http.HandlerFunc {
 	fn := func(w http.ResponseWriter, r *http.Request) {
 		// Getting the amount
 		value := retrieveAmount(r)
@@ -62,9 +64,18 @@ func GetPaymentRequest(ctx context.Context, lndServices *lndclient.GrpcLndServic
 		_, pr, err := lndServices.Client.AddInvoice(ctx, invoice)
 		if err != nil {
 			fmt.Printf("GetPaymentRequest (AddInvoice) error: %v\n", err)
+			http.Error(w, err.Error(), 500)
+			return
 		}
 
-		output := []byte(pr)
+		response := models.NewPaymentResponse(pr)
+
+		output, err := json.Marshal(response)
+		if err != nil {
+			fmt.Printf("GetPaymentRequest (Marshal) error: %v\n", err)
+			http.Error(w, err.Error(), 500)
+			return
+		}
 
 		w.Header().Set("content-type", "application/json")
 		w.Write(output)
