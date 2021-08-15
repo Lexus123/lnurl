@@ -1,6 +1,7 @@
 package server
 
 import (
+	"context"
 	"net/http"
 
 	"github.com/Lexus123/lnurl/models"
@@ -10,22 +11,24 @@ import (
 )
 
 /*
-NewRouter ...
+NewRouter creates a new router and needs LND Services to do so
 */
 func NewRouter(lndServices *lndclient.GrpcLndServices) *mux.Router {
+	ctx := context.TODO()
 	router := mux.NewRouter().StrictSlash(true)
 
-	getRoutes := models.Routes{
-		models.Route{
+	// Define the GET requests
+	getRoutes := []models.Route{
+		{
 			Name:        "GetHomePage",
 			Method:      "GET",
 			Pattern:     "/lnurl-pay",
 			Queries:     []string{"amount", "{amount}"},
-			HandlerFunc: handlers.GetPaymentRequest(lndServices),
+			HandlerFunc: handlers.GetPaymentRequest(ctx, lndServices),
 		},
 	}
 
-	// Add GET requests
+	// Add all GET requests
 	for _, route := range getRoutes {
 		var handler http.Handler
 		handler = route.HandlerFunc

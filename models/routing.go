@@ -14,8 +14,3 @@ type Route struct {
 	HandlerFunc http.HandlerFunc
 	Queries     []string
 }
-
-/*
-Routes defines a slice of routes
-*/
-type Routes []Route
