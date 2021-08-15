@@ -61,7 +61,7 @@ func Payment(ctx context.Context, lndServices *lndclient.GrpcLndServices) http.H
 		value := retrieveAmount(r)
 
 		//
-		ba := []byte("[[\"text/plain\", \"donate@theroadtonode.com\"],[\"text/identifier\", \"donate@theroadtonode.com\"]]")
+		ba := []byte("[[text/plain, donate@theroadtonode.com],[text/identifier, donate@theroadtonode.com]]")
 		ba2 := NewSHA256(ba)
 
 		// Create invoice configuration
@@ -73,7 +73,7 @@ func Payment(ctx context.Context, lndServices *lndclient.GrpcLndServices) http.H
 		}
 
 		// Create the invoice
-		// "[[\\"text/plain\\", \\"donate@theroadtonode.com\\"],[\\"text/identifier\\", \\"donate@theroadtonode.com\\"]]"
+		// "[[\text/plain\, \donate@theroadtonode.com\],[\text/identifier\, \donate@theroadtonode.com\]]"
 		_, pr, err := lndServices.Client.AddInvoice(ctx, invoice)
 		if err != nil {
 			fmt.Printf("GetPaymentRequest (AddInvoice) error: %v\n", err)
