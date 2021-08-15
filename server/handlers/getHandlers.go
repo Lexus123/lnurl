@@ -88,12 +88,12 @@ func Payment(ctx context.Context, lndServices *lndclient.GrpcLndServices) http.H
 		h5 := NewSHA256(b5)
 		h6 := NewSHA256(b6)
 
-		fmt.Printf("h1: %v\n", string(h1))
-		fmt.Printf("h2: %v\n", string(h2))
-		fmt.Printf("h3: %v\n", string(h3))
-		fmt.Printf("h4: %v\n", string(h4))
-		fmt.Printf("h5: %v\n", string(h5))
-		fmt.Printf("h6: %v\n", string(h6))
+		fmt.Printf("h1: %v\n", h1)
+		fmt.Printf("h2: %v\n", h2)
+		fmt.Printf("h3: %v\n", h3)
+		fmt.Printf("h4: %v\n", h4)
+		fmt.Printf("h5: %v\n", h5)
+		fmt.Printf("h6: %v\n", h6)
 
 		// Create invoice configuration
 		invoice := &invoicesrpc.AddInvoiceData{
