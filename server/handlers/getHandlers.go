@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"context"
+	"crypto/sha256"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -45,6 +46,12 @@ func retrieveAmount(r *http.Request) lnwire.MilliSatoshi {
 	return a2msat(a)
 }
 
+// NewSHA256 ...
+func NewSHA256(data []byte) []byte {
+	hash := sha256.Sum256(data)
+	return hash[:]
+}
+
 /*
 Payment ...
 */
@@ -53,14 +60,20 @@ func Payment(ctx context.Context, lndServices *lndclient.GrpcLndServices) http.H
 		// Getting the amount
 		value := retrieveAmount(r)
 
+		//
+		ba := []byte("[[\\\"text/plain\\\", \\\"donate@theroadtonode.com\\\"],[\\\"text/identifier\\\", \\\"donate@theroadtonode.com\\\"]]")
+		ba2 := NewSHA256(ba)
+
 		// Create invoice configuration
 		invoice := &invoicesrpc.AddInvoiceData{
-			Value:       value,
-			Expiry:      60,
-			HodlInvoice: false,
+			Value:           value,
+			Expiry:          60,
+			HodlInvoice:     false,
+			DescriptionHash: ba2,
 		}
 
 		// Create the invoice
+		// "[[\\"text/plain\\", \\"donate@theroadtonode.com\\"],[\\"text/identifier\\", \\"donate@theroadtonode.com\\"]]"
 		_, pr, err := lndServices.Client.AddInvoice(ctx, invoice)
 		if err != nil {
 			fmt.Printf("GetPaymentRequest (AddInvoice) error: %v\n", err)
