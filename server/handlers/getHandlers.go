@@ -17,7 +17,7 @@ func str2f(str string) (float64, error) {
 }
 
 func f2a(f float64) (btcutil.Amount, error) {
-	return btcutil.NewAmount(f)
+	return btcutil.NewAmount(f / 100000000000)
 }
 
 func a2msat(a btcutil.Amount) lnwire.MilliSatoshi {
