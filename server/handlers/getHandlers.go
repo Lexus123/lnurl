@@ -62,10 +62,10 @@ func Payment(ctx context.Context, lndServices *lndclient.GrpcLndServices) http.H
 
 		s1 := `[[text/plain, donate@theroadtonode.com],[text/identifier, donate@theroadtonode.com]]`                   // NOT WORKING
 		s2 := "[[text/plain, donate@theroadtonode.com],[text/identifier, donate@theroadtonode.com]]"                   // NOT WORKING
-		s3 := `[[\"text/plain\", \"donate@theroadtonode.com\"],[\"text/identifier\", \"donate@theroadtonode.com\"]]`   // NOT WORKING
+		s3 := `[[\"text/plain\", \"donate@theroadtonode.com\"],[\"text/identifier\", \"donate@theroadtonode.com\"]]`   // NOT WORKING, BUT SHOULD
 		s4 := "[[\"text/plain\", \"donate@theroadtonode.com\"],[\"text/identifier\", \"donate@theroadtonode.com\"]]"   // NOT WORKING
 		s5 := `"[[\"text/plain\", \"donate@theroadtonode.com\"],[\"text/identifier\", \"donate@theroadtonode.com\"]]"` // NOT WORKING
-		s6 := `"[[text/plain, donate@theroadtonode.com],[text/identifier, donate@theroadtonode.com]]"`
+		s6 := `"[[text/plain, donate@theroadtonode.com],[text/identifier, donate@theroadtonode.com]]"`                 // NOT WORKING
 
 		fmt.Printf("s1: %v\n", s1)
 		fmt.Printf("s2: %v\n", s2)
@@ -97,14 +97,14 @@ func Payment(ctx context.Context, lndServices *lndclient.GrpcLndServices) http.H
 
 		// Create invoice configuration
 		invoice := &invoicesrpc.AddInvoiceData{
+			Memo:            s3,
 			Value:           value,
 			Expiry:          60,
 			HodlInvoice:     false,
-			DescriptionHash: h6,
+			DescriptionHash: h3,
 		}
 
 		// Create the invoice
-		// "[[\text/plain\, \donate@theroadtonode.com\],[\text/identifier\, \donate@theroadtonode.com\]]"
 		_, pr, err := lndServices.Client.AddInvoice(ctx, invoice)
 		if err != nil {
 			fmt.Printf("GetPaymentRequest (AddInvoice) error: %v\n", err)
@@ -112,6 +112,7 @@ func Payment(ctx context.Context, lndServices *lndclient.GrpcLndServices) http.H
 			return
 		}
 
+		// Create the response
 		response := models.NewPaymentResponse(pr)
 
 		output, err := json.Marshal(response)
