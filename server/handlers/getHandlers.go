@@ -60,37 +60,47 @@ func Payment(ctx context.Context, lndServices *lndclient.GrpcLndServices) http.H
 		// Getting the amount
 		value := retrieveAmount(r)
 
-		s1 := `[[text/plain, donate@theroadtonode.com],[text/identifier, donate@theroadtonode.com]]`
-		s2 := "[[text/plain, donate@theroadtonode.com],[text/identifier, donate@theroadtonode.com]]"
+		s1 := `[[text/plain, donate@theroadtonode.com],[text/identifier, donate@theroadtonode.com]]` // NOT WORKING
+		s2 := "[[text/plain, donate@theroadtonode.com],[text/identifier, donate@theroadtonode.com]]" // NOT WORKING
 		s3 := `[[\"text/plain\", \"donate@theroadtonode.com\"],[\"text/identifier\", \"donate@theroadtonode.com\"]]`
 		s4 := "[[\"text/plain\", \"donate@theroadtonode.com\"],[\"text/identifier\", \"donate@theroadtonode.com\"]]"
+		s5 := `"[[\"text/plain\", \"donate@theroadtonode.com\"],[\"text/identifier\", \"donate@theroadtonode.com\"]]"`
+		s6 := `"[[text/plain, donate@theroadtonode.com],[text/identifier, donate@theroadtonode.com]]"`
 
 		fmt.Printf("s1: %v\n", s1)
 		fmt.Printf("s2: %v\n", s2)
 		fmt.Printf("s3: %v\n", s3)
 		fmt.Printf("s4: %v\n", s4)
+		fmt.Printf("s5: %v\n", s5)
+		fmt.Printf("s6: %v\n", s6)
 
 		b1 := []byte(s1)
 		b2 := []byte(s2)
 		b3 := []byte(s3)
 		b4 := []byte(s4)
+		b5 := []byte(s5)
+		b6 := []byte(s6)
 
 		h1 := NewSHA256(b1)
 		h2 := NewSHA256(b2)
 		h3 := NewSHA256(b3)
 		h4 := NewSHA256(b4)
+		h5 := NewSHA256(b5)
+		h6 := NewSHA256(b6)
 
-		fmt.Printf("h1: %v\n", h1)
-		fmt.Printf("h2: %v\n", h2)
-		fmt.Printf("h3: %v\n", h3)
-		fmt.Printf("h4: %v\n", h4)
+		fmt.Printf("h1: %v\n", string(h1))
+		fmt.Printf("h2: %v\n", string(h2))
+		fmt.Printf("h3: %v\n", string(h3))
+		fmt.Printf("h4: %v\n", string(h4))
+		fmt.Printf("h5: %v\n", string(h5))
+		fmt.Printf("h6: %v\n", string(h6))
 
 		// Create invoice configuration
 		invoice := &invoicesrpc.AddInvoiceData{
 			Value:           value,
 			Expiry:          60,
 			HodlInvoice:     false,
-			DescriptionHash: h1,
+			DescriptionHash: h3,
 		}
 
 		// Create the invoice
