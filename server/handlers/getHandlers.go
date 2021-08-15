@@ -61,7 +61,7 @@ func Payment(ctx context.Context, lndServices *lndclient.GrpcLndServices) http.H
 		value := retrieveAmount(r)
 
 		//
-		ba := []byte("[[\\\"text/plain\\\", \\\"donate@theroadtonode.com\\\"],[\\\"text/identifier\\\", \\\"donate@theroadtonode.com\\\"]]")
+		ba := []byte(`[["text/plain", "donate@theroadtonode.com"],["text/identifier", "donate@theroadtonode.com"]]`)
 		ba2 := NewSHA256(ba)
 
 		// Create invoice configuration
