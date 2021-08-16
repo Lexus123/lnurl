@@ -5,7 +5,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/lightninglabs/lndclient"
+	"github.com/Lexus123/lndclient"
 )
 
 type Flags struct {

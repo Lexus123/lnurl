@@ -8,9 +8,9 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/Lexus123/lndclient"
 	"github.com/Lexus123/lnurl/models"
 	"github.com/btcsuite/btcutil"
-	"github.com/lightninglabs/lndclient"
 	"github.com/lightningnetwork/lnd/lnrpc/invoicesrpc"
 	"github.com/lightningnetwork/lnd/lnwire"
 )

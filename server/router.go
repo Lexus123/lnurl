@@ -4,10 +4,10 @@ import (
 	"context"
 	"net/http"
 
+	"github.com/Lexus123/lndclient"
 	"github.com/Lexus123/lnurl/models"
 	"github.com/Lexus123/lnurl/server/handlers"
 	"github.com/gorilla/mux"
-	"github.com/lightninglabs/lndclient"
 )
 
 /*
