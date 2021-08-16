@@ -53,59 +53,23 @@ func NewSHA256(data []byte) []byte {
 }
 
 /*
-Payment ...
+Payment ... `[["text/plain", "donate@theroadtonode.com"],["text/identifier", "donate@theroadtonode.com"]]`
 */
 func Payment(ctx context.Context, lndServices *lndclient.GrpcLndServices) http.HandlerFunc {
 	fn := func(w http.ResponseWriter, r *http.Request) {
 		// Getting the amount
 		value := retrieveAmount(r)
 
-		s1 := `[[text/plain, donate@theroadtonode.com],[text/identifier, donate@theroadtonode.com]]`                   // NOT WORKING
-		s2 := "[[text/plain, donate@theroadtonode.com],[text/identifier, donate@theroadtonode.com]]"                   // NOT WORKING
-		s3 := `[[\"text/plain\", \"donate@theroadtonode.com\"],[\"text/identifier\", \"donate@theroadtonode.com\"]]`   // NOT WORKING, BUT SHOULD
-		s4 := "[[\"text/plain\", \"donate@theroadtonode.com\"],[\"text/identifier\", \"donate@theroadtonode.com\"]]"   // NOT WORKING, ALSO COULD
-		s5 := `"[[\"text/plain\", \"donate@theroadtonode.com\"],[\"text/identifier\", \"donate@theroadtonode.com\"]]"` // NOT WORKING
-		s6 := `"[[text/plain, donate@theroadtonode.com],[text/identifier, donate@theroadtonode.com]]"`                 // NOT WORKING
-		s7 := `[["text/plain", "donate@theroadtonode.com"],["text/identifier", "donate@theroadtonode.com"]]`
-
-		fmt.Printf("s1: %v\n", s1)
-		fmt.Printf("s2: %v\n", s2)
-		fmt.Printf("s3: %v\n", s3)
-		fmt.Printf("s4: %v\n", s4)
-		fmt.Printf("s5: %v\n", s5)
-		fmt.Printf("s6: %v\n", s6)
-		fmt.Printf("s7: %v\n", s7)
-
-		b1 := []byte(s1)
-		b2 := []byte(s2)
-		b3 := []byte(s3)
-		b4 := []byte(s4)
-		b5 := []byte(s5)
-		b6 := []byte(s6)
-		b7 := []byte(s7)
-
-		h1 := NewSHA256(b1)
-		h2 := NewSHA256(b2)
-		h3 := NewSHA256(b3)
-		h4 := NewSHA256(b4)
-		h5 := NewSHA256(b5)
-		h6 := NewSHA256(b6)
-		h7 := NewSHA256(b7)
-
-		fmt.Printf("h1: %x\n", h1)
-		fmt.Printf("h2: %x\n", h2)
-		fmt.Printf("h3: %x\n", h3)
-		fmt.Printf("h4: %x\n", h4)
-		fmt.Printf("h5: %x\n", h5)
-		fmt.Printf("h6: %x\n", h6)
-		fmt.Printf("h7: %x\n", h7)
+		s := "[[\"text/plain\", \"donate@theroadtonode.com\"],[\"text/identifier\", \"donate@theroadtonode.com\"]]"
+		b := []byte(s)
+		h := NewSHA256(b)
 
 		// Create invoice configuration
 		invoice := &invoicesrpc.AddInvoiceData{
 			Value:           value,
 			Expiry:          60,
 			HodlInvoice:     false,
-			DescriptionHash: h4,
+			DescriptionHash: h,
 		}
 
 		// Create the invoice
