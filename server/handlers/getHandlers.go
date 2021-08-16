@@ -63,9 +63,10 @@ func Payment(ctx context.Context, lndServices *lndclient.GrpcLndServices) http.H
 		s1 := `[[text/plain, donate@theroadtonode.com],[text/identifier, donate@theroadtonode.com]]`                   // NOT WORKING
 		s2 := "[[text/plain, donate@theroadtonode.com],[text/identifier, donate@theroadtonode.com]]"                   // NOT WORKING
 		s3 := `[[\"text/plain\", \"donate@theroadtonode.com\"],[\"text/identifier\", \"donate@theroadtonode.com\"]]`   // NOT WORKING, BUT SHOULD
-		s4 := "[[\"text/plain\", \"donate@theroadtonode.com\"],[\"text/identifier\", \"donate@theroadtonode.com\"]]"   // NOT WORKING
+		s4 := "[[\"text/plain\", \"donate@theroadtonode.com\"],[\"text/identifier\", \"donate@theroadtonode.com\"]]"   // NOT WORKING, ALSO COULD
 		s5 := `"[[\"text/plain\", \"donate@theroadtonode.com\"],[\"text/identifier\", \"donate@theroadtonode.com\"]]"` // NOT WORKING
 		s6 := `"[[text/plain, donate@theroadtonode.com],[text/identifier, donate@theroadtonode.com]]"`                 // NOT WORKING
+		s7 := `[["text/plain", "donate@theroadtonode.com"],["text/identifier", "donate@theroadtonode.com"]]`
 
 		fmt.Printf("s1: %v\n", s1)
 		fmt.Printf("s2: %v\n", s2)
@@ -73,6 +74,7 @@ func Payment(ctx context.Context, lndServices *lndclient.GrpcLndServices) http.H
 		fmt.Printf("s4: %v\n", s4)
 		fmt.Printf("s5: %v\n", s5)
 		fmt.Printf("s6: %v\n", s6)
+		fmt.Printf("s7: %v\n", s7)
 
 		b1 := []byte(s1)
 		b2 := []byte(s2)
@@ -80,6 +82,7 @@ func Payment(ctx context.Context, lndServices *lndclient.GrpcLndServices) http.H
 		b4 := []byte(s4)
 		b5 := []byte(s5)
 		b6 := []byte(s6)
+		b7 := []byte(s7)
 
 		h1 := NewSHA256(b1)
 		h2 := NewSHA256(b2)
@@ -87,6 +90,7 @@ func Payment(ctx context.Context, lndServices *lndclient.GrpcLndServices) http.H
 		h4 := NewSHA256(b4)
 		h5 := NewSHA256(b5)
 		h6 := NewSHA256(b6)
+		h7 := NewSHA256(b7)
 
 		fmt.Printf("h1: %x\n", h1)
 		fmt.Printf("h2: %x\n", h2)
@@ -94,14 +98,14 @@ func Payment(ctx context.Context, lndServices *lndclient.GrpcLndServices) http.H
 		fmt.Printf("h4: %x\n", h4)
 		fmt.Printf("h5: %x\n", h5)
 		fmt.Printf("h6: %x\n", h6)
+		fmt.Printf("h7: %x\n", h7)
 
 		// Create invoice configuration
 		invoice := &invoicesrpc.AddInvoiceData{
-			// Memo:            s3,
 			Value:           value,
 			Expiry:          60,
 			HodlInvoice:     false,
-			DescriptionHash: h3,
+			DescriptionHash: h4,
 		}
 
 		// Create the invoice
