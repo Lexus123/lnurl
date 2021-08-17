@@ -13,5 +13,6 @@ func NewPaymentResponse(pr string) lnurl.LNURLPayResponse2 {
 			URL:         "https://node.hfs.pw",
 			Description: "Thanks for donating",
 		},
+		Disposable: nil,
 	}
 }
