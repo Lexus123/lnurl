@@ -12,6 +12,7 @@ func main() {
 	macDir := flag.String("mac", "~/.lnd/data/chain/bitcoin/mainnet", "Path to the macaroon directory")
 	tlsPath := flag.String("tls", "~/.lnd/tls.cert", "Path to the tls.cert file")
 
+	// Parse the flags
 	flag.Parse()
 
 	flags := server.Flags{

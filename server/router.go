@@ -20,7 +20,7 @@ func NewRouter(lndServices *lndclient.GrpcLndServices) *mux.Router {
 	// Define the GET requests
 	getRoutes := []models.Route{
 		{
-			Name:        "GetHomePage",
+			Name:        "GetLnurlPayPage",
 			Method:      "GET",
 			Pattern:     "/lnurl-pay",
 			Queries:     []string{"amount", "{amount}"},

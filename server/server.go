@@ -13,14 +13,15 @@ type Flags struct {
 }
 
 /*
-Host will init the routing and fire up a server
+Host will init the routes and fire up a server
 */
 func Host(flags Flags) {
+	// Output your flags
 	fmt.Printf("\nHost: %v\n", *flags.Host)
 	fmt.Printf("Mac: %v\n", *flags.Mac)
 	fmt.Printf("TLS: %v\n", *flags.TLS)
 
-	// Setup LND Services client
+	// Setup the config for an LND Services client
 	conf := &lndclient.LndServicesConfig{
 		LndAddress:  *flags.Host,
 		Network:     lndclient.NetworkMainnet,
@@ -28,6 +29,7 @@ func Host(flags Flags) {
 		TLSPath:     *flags.TLS,
 	}
 
+	// Pass the config and get a LND Services client
 	lndServices, err := lndclient.NewLndServices(conf)
 	if err != nil {
 		fmt.Printf("GetPaymentRequest (NewLndServices) error: %v\n", err)
