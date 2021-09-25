@@ -11,7 +11,7 @@ import (
 )
 
 /*
-NewRouter creates a new router and needs LND Services to do so
+NewRouter creates a new router and needs LND Services to do so.
 */
 func NewRouter(lndServices *lndclient.GrpcLndServices) *mux.Router {
 	ctx := context.TODO()
